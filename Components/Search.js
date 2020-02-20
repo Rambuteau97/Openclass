@@ -11,17 +11,27 @@ class Search extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state= {film:[]}
+    this.state= {
+      film:[]
+    }
+    this.searchText=""
   }
+
   _loadFilms() {
-    getFilmsFromApiWithSearchedText("star").then(data => this.setState({ films: data.results}))
+    if (this.searchText.length > 0){
+      getFilmsFromApiWithSearchedText(this.searchText).then(data => this.setState({ films: data.results}))
+    }
   }
  
- 
+  _searchTextInputChanged(text){
+    this.searchText = text
+  }
+ //permet de récuperer le text écrit dans la bar de recherche et que le stat serachText change 
+
   render() {
     return (
       <View style={styles.main_container}>
-        <TextInput style={styles.textinput} placeholder='Titre du film'/>
+        <TextInput onChangeText={(text)=>this._searchTextInputChanged(text)} style={styles.textinput} placeholder='Titre du film'/>
         <Button style={{height:50 }}title='Rechercher' onPress={() => this._loadFilms()}/>
         <FlatList
         data={this.state.films}
