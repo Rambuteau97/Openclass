@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, Text, ActivityIndicator, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Button } from 'react-native'
 import { getFilmDetailFromApi } from '../API/TMDBApi'
+import { connect } from 'react-redux'
 
 class FilmDetail extends React.Component {
   constructor(props) {
@@ -31,13 +32,23 @@ class FilmDetail extends React.Component {
   }
 
   _displayFilm() {
-    if (this.state.film != undefined) {
-      return (
-        <ScrollView style={styles.scrollview_container}>
-          <Text>{this.state.film.title}</Text>
-        </ScrollView>
-      )
-    }
+    const { film } = this.state
+      if (film != undefined) {
+        return (
+          <ScrollView style={styles.scrollview_container}>
+            <Image
+            style={styles.image}
+            source={{uri: getImageFromApi(film.backdrop_path)}}
+            />
+            <Text>{this.state.film.title}</Text>
+            <Button title= 'Titre du film' onPress={()=>this._toggleFavorite()}/>
+          </ScrollView>
+        )
+      }
+  }
+
+  _toggleFavorite() {
+
   }
 
   render() {
@@ -68,4 +79,13 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FilmDetail
+const mapStateToProps = (state) => {
+  return {
+  favoritesFilm: state.favoritesFilm//On associe la liste des films favoris
+  }
+}
+//Dès que le store et le state de l'application vont être mis à jour par
+// nos actions, automatiquement, notre component va être informé de ce changement. 
+
+export default connect(mapStateToProps)(FilmDetail)
+//On connecte le state de l'application avec les props du component FilmDetail.
