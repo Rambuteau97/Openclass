@@ -1,17 +1,17 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation-stack'
-import Search from '../Components/Search'
-import FilmDetail from '../Components/FilmDetail'
+import React from "react";
+import Search from "../Components/Search";
+import FilmDetail from "../Components/FilmDetail";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-const SearchStackNavigator = createStackNavigator({
-  Search: {
-    screen: Search,
-    navigationOptions: {
-      title: 'Rechercher'
-    }
-  },
-  FilmDetail: { 
-    screen: FilmDetail
-  }
-})
+const Tab = createBottomTabNavigator();
 
-export default createAppContainer(SearchStackNavigator)
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="FilmDetail" component={FilmDetail} />
+    </Tab.Navigator>
+  );
+}
+
+export default MyTabs;
