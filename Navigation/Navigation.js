@@ -9,7 +9,7 @@ function MyTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="FilmDetail" component={FilmDetail} />
+      <Tab.Screen name="Favoris" component={FilmDetail} />
     </Tab.Navigator>
   );
 }
