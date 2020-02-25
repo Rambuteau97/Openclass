@@ -7,13 +7,13 @@ import { connect } from 'react-redux'
 class FilmItem extends React.Component {
   
   _toggleFavorite() {
-    const action = { type: "TOGGLE_FAVORITE", value: this.state.film }
+    const action = { type: "TOGGLE_FAVORITE", value: this.props.film }//changer state en props
     this.props.dispatch(action)
   }
 
   _displayFavoriteImage() {
     var sourceImage = require('../Images/ic_favorite_border.png')
-    if (this.props.favoritesFilm.findIndex(item => item.id === this.state.film.id) !== -1) {
+    if (this.props.favoritesFilm.findIndex(item => item.id === this.props.film.id) !== -1) {//changer le state en propse
       // Film dans nos favoris
       sourceImage = require('../Images/ic_favorite.png')
     }
