@@ -1,8 +1,30 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native'
 import {getImageFromApi} from '../API/TMDBApi'
+import { connect } from 'react-redux'
+
 
 class FilmItem extends React.Component {
+  
+  _toggleFavorite() {
+    const action = { type: "TOGGLE_FAVORITE", value: this.state.film }
+    this.props.dispatch(action)
+  }
+
+  _displayFavoriteImage() {
+    var sourceImage = require('../Images/ic_favorite_border.png')
+    if (this.props.favoritesFilm.findIndex(item => item.id === this.state.film.id) !== -1) {
+      // Film dans nos favoris
+      sourceImage = require('../Images/ic_favorite.png')
+    }
+    return (
+      <Image
+        style={styles.favorite_image}
+        source={sourceImage}
+      />
+    )
+}
+
   render() {
     const film = this.props.film
     const displayDetailForFilm = this.props.displayDetailForFilm
@@ -17,6 +39,11 @@ class FilmItem extends React.Component {
         <View style={styles.content_container}>
           <View style={styles.header_container}>
             <Text style={styles.title_text}>{film.title}</Text>
+            <TouchableOpacity
+              style={styles.favorite_container}
+              onPress={() => this._toggleFavorite()}>
+              {this._displayFavoriteImage()}
+            </TouchableOpacity>
             <Text style={styles.vote_text}>{film.vote_average}</Text>
           </View>
           <View style={styles.description_container}>
@@ -31,10 +58,30 @@ class FilmItem extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: (action) => { dispatch(action) }
+  }
+}
+
+
+const mapStateToProps = (state) => {
+    return {
+      favoritesFilm: state.favoritesFilm
+    }
+}
+
 const styles = StyleSheet.create({
   main_container: {
     height: 190,
     flexDirection: 'row'
+  },
+  favorite_container: {
+    alignItems: 'center'
+  },
+  favorite_image: {
+    width: 40,
+    height: 40
   },
   image: {
     width: 120,
@@ -78,4 +125,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FilmItem
+export default  connect(mapStateToProps, mapDispatchToProps)(FilmItem)

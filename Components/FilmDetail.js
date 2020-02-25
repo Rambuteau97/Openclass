@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Image } from 'react-native'
+import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Image, Button } from 'react-native'
 import { getFilmDetailFromApi, getImageFromApi } from '../API/TMDBApi'
 import moment from 'moment'
 import numeral from 'numeral'
+
 
 class FilmDetail extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class FilmDetail extends React.Component {
     }
   }
 
+  
   componentDidMount() {
     getFilmDetailFromApi(this.props.navigation.state.params.idFilm).then(data => {
       this.setState({
@@ -60,9 +62,7 @@ class FilmDetail extends React.Component {
     }
   }
 
-  _toggleFavorite() {
-
-  }
+  
 
   render() {
     return (
@@ -73,6 +73,7 @@ class FilmDetail extends React.Component {
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   main_container: {
@@ -122,5 +123,5 @@ const styles = StyleSheet.create({
 //Dès que le store et le state de l'application vont être mis à jour par
 // nos actions, automatiquement, notre component va être informé de ce changement. 
 
-export default (FilmDetail)
+export default(FilmDetail)
 //On connecte le state de l'application avec les props du component FilmDetail.
