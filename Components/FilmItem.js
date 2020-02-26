@@ -31,7 +31,7 @@ class FilmItem extends React.Component {
     return (
       <TouchableOpacity 
           style={styles.main_container}
-          onPress={() => displayDetailForFilm(film.id)}>
+          onPress={() => this.props.displayDetailForFilm(film.id)}>
         <Image
           style={styles.image}
           source={{uri: getImageFromApi(film.poster_path)}}
