@@ -27,11 +27,9 @@ class FilmItem extends React.Component {
 
   render() {
     const film = this.props.film
-    const displayDetailForFilm = this.props.displayDetailForFilm
     return (
-      <TouchableOpacity 
-          style={styles.main_container}
-          onPress={() => this.props.displayDetailForFilm(film.id)}>
+      <View
+          style={styles.main_container}>
         <Image
           style={styles.image}
           source={{uri: getImageFromApi(film.poster_path)}}
@@ -53,7 +51,7 @@ class FilmItem extends React.Component {
             <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     )
   }
 }

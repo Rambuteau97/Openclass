@@ -1,41 +1,25 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, Button, Text, FlatList, ActivityIndicator } from 'react-native'
+import { StyleSheet, FlatList } from 'react-native'
 import FilmItem from './FilmItem'
 import { connect } from 'react-redux'
 
 class Favorite extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      films: [],
-
-    }
-  }
-
-
   _searchTextInputChanged(text) {
     this.searchedText = text 
-  }
-
-
-  _displayDetailForFilm = (idFilm) => {
-    this.props.navigation.navigate("FilmDetail", { idFilm: idFilm })
   }
 
   render() {
     return (
         <FlatList
-          
           style={styles.list}
-          data={this.props.films}
-          extraData={this.props.favoritesFilm}
+          data={this.props.favoritesFilm}
           keyExtractor={(item) => item.id.toString()}
+          favoriteList={true}
           renderItem={({item}) => (
             <FilmItem
               film={item}
               isFilmFavorite={(this.props.favoritesFilm.findIndex(film => film.id === item.id) !== -1) ? true : false}
-              displayDetailForFilm={this._displayDetailForFilm}
             />
           )}
           onEndReachedThreshold={0.5}
